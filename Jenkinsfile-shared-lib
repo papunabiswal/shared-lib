@@ -1,0 +1,20 @@
+@Library("shared-lib@main") _
+
+pipeline {
+    agent any
+    stages {
+        stage('Code Checkout') {
+            steps {
+                script {
+                    def dirPath = "/var/lib/jenkins/workspace/Demo/shared-lib-pipeline"
+                    if (fileExists(dirPath)) {
+                        echo "Cleaning up existing directory: ${dirPath}"
+                        deleteDir()
+                    }
+                    def workingDir = checkoutCode("https://github.com/papunabiswal/Ekart.git", "Dev")
+                    echo "$workingDir"
+                }
+            }
+        }
+    }
+}
